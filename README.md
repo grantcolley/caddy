@@ -1,16 +1,14 @@
 # caddy
 
-# [Setup](#setup)
+### Table of contents
+
+- [Setup](#setup)
+  - [Install Vite](#install-vite)
+  - [Install dependencies](#install-dependencies)
+  - [Run the Development Server](#run-the-development-server)
+  - [Install ESLint & Prettier](#install-eslint--prettier)
 
 # Setup
-
-### [Install Vite](#install-vite)
-
-### [Install dependencies](#install-dependencies)
-
-### [Run the Development Server](#run-the-development-server)
-
-### [Install ESLint & Prettier](#install-eslint--prettier)
 
 ### Install Vite
 
