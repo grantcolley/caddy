@@ -7,7 +7,7 @@
   - [Install dependencies](#install-dependencies)
   - [Run the Development Server](#run-the-development-server)
   - [Install ESLint & Prettier](#install-eslint--prettier)
-  - [Install TypeScript type definitions for Node.js](#install-typescript-type-definitions-for-node-js)
+  - [Install TypeScript type definitions for Node.js](#install-typescript-type-definitions-for-nodejs)
   - [Install React Router](#install-react-router)
   - [Install React Hook Form](#install-react-hook-form)
   - [Install Zod](#install-zod)
