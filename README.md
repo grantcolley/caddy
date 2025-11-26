@@ -130,3 +130,9 @@ npm install zod
 ```bash
 npm install tailwindcss @tailwindcss/vite
 ```
+
+Replace the contents of `src/index.css` with:
+
+```TypeScript
+@import 'tailwindcss';
+```
