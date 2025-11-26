@@ -11,6 +11,7 @@
   - [Install React Router](#install-react-router)
   - [Install React Hook Form](#install-react-hook-form)
   - [Install Zod](#install-zod)
+  - [Install Tailwind](#install-tailwind)
 
 # Tooling Setup
 
@@ -120,4 +121,12 @@ npm install react-hook-form
 
 ```bash
 npm install zod
+```
+
+### Install Tailwind
+
+[Tailwind](https://tailwindcss.com/) is a CSS framework made of small utility classes that help you build custom, responsive designs fast.
+
+```bash
+npm install tailwindcss @tailwindcss/vite
 ```
