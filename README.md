@@ -136,3 +136,16 @@ Replace the contents of `src/index.css` with:
 ```TypeScript
 @import 'tailwindcss';
 ```
+
+Add the `tailwindcss` plugin to `vite.config.ts`.
+
+```TypeScript
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite'; // 👈 add import
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [react(), tailwindcss()], // 👈 add tailwindcss()
+});
+```
