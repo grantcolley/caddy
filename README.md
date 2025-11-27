@@ -12,6 +12,8 @@
   - [Install React Hook Form](#install-react-hook-form)
   - [Install Zod](#install-zod)
   - [Install Tailwind](#install-tailwind)
+  - [Edit `tsconfig` files](#edit-tsconfig-files)
+  - [Update `vite.config.ts`](#update-viteconfigts)
 
 # Tooling Setup
 
@@ -137,15 +139,66 @@ Replace the contents of `src/index.css` with:
 @import 'tailwindcss';
 ```
 
-Add the `tailwindcss` plugin to `vite.config.ts`.
+### Edit `tsconfig` files
+
+Update `tsconfig.json`.
+
+```JSON
+{
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ],
+  "compilerOptions": {
+    "baseUrl": ".", // 👈 add to resolve paths
+    "paths": {
+      "@/*": ["./src/*"] // 👈 add to resolve paths
+    }
+  }
+}
+```
+
+Update `tsconfig.app.json`.
+
+```JSON
+{
+  "compilerOptions": {
+    // ...
+
+    // 👇 add
+
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    }
+
+    // 👆 add
+
+    // ...
+  }
+}
+```
+
+### Update `vite.config.ts`
 
 ```TypeScript
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-import tailwindcss from '@tailwindcss/vite'; // 👈 add import
+import path from "path" // 👈 add import
+import tailwindcss from "@tailwindcss/vite" // 👈 add import
+import react from "@vitejs/plugin-react"
+import { defineConfig } from "vite"
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss()], // 👈 add tailwindcss()
-});
+  plugins: [react(), tailwindcss()], // 👈 add tailwindcss() plugin
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"), // 👈 add to resolve paths
+    },
+  },
+})
 ```
+
+### Install Tailwind
