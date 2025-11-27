@@ -14,6 +14,8 @@
   - [Install Tailwind](#install-tailwind)
   - [Edit `tsconfig` files](#edit-tsconfig-files)
   - [Update `vite.config.ts`](#update-viteconfigts)
+  - [Install shadcn](#install-shadcn)
+  - [Install tabler icons](#install-tabler-icons)
 
 # Tooling Setup
 
@@ -201,4 +203,16 @@ export default defineConfig({
 })
 ```
 
-### Install Tailwind
+### Install shadcn
+
+Run the shadcn init command to setup your project.
+
+```bash
+npx shadcn@latest init
+```
+
+### Install tabler icons
+
+```bash
+npm install @tabler/icons-react
+```
