@@ -216,3 +216,19 @@ npx shadcn@latest init
 ```bash
 npm install @tabler/icons-react
 ```
+
+Set `iconLibrary` in `components.js` to `tabler`.
+
+```JSON
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+
+  // ...
+
+  "iconLibrary": "tabler",
+
+   // ...
+
+  "registries": {}
+}
+```
