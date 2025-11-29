@@ -16,6 +16,7 @@
   - [Update `vite.config.ts`](#update-viteconfigts)
   - [Install shadcn](#install-shadcn)
   - [Install tabler icons](#install-tabler-icons)
+  - [Run](#run)
 
 # Tooling Setup
 
@@ -153,9 +154,9 @@ Update `tsconfig.json`.
     { "path": "./tsconfig.node.json" }
   ],
   "compilerOptions": {
-    "baseUrl": ".", // 👈 add to resolve paths
+    "baseUrl": ".", 👈 add to resolve paths
     "paths": {
-      "@/*": ["./src/*"] // 👈 add to resolve paths
+      "@/*": ["./src/*"] 👈 add to resolve paths
     }
   }
 }
@@ -166,9 +167,10 @@ Update `tsconfig.app.json`.
 ```JSON
 {
   "compilerOptions": {
-    // ...
 
-    // 👇 add
+    //...
+
+    👇 add
 
     "baseUrl": ".",
     "paths": {
@@ -177,9 +179,9 @@ Update `tsconfig.app.json`.
       ]
     }
 
-    // 👆 add
+    👆 add
 
-    // ...
+    //...
   }
 }
 ```
@@ -225,10 +227,19 @@ Set `iconLibrary` in `components.js` to `tabler`.
 
   // ...
 
-  "iconLibrary": "tabler",
+  "iconLibrary": "tabler", 👈 change to tabler
 
    // ...
 
   "registries": {}
 }
 ```
+
+### Run
+
+```bash
+npm run dev
+```
+
+`http://localhost:5173/`
+![Alt text](/readme-images/caddy-template.png?raw=true 'Caddy template')
