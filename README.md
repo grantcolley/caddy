@@ -17,6 +17,7 @@
   - [Install shadcn](#install-shadcn)
   - [Install tabler icons](#install-tabler-icons)
   - [Run](#run)
+- [Create the Main Layout](#create-the-main-layout)
 
 # Tooling Setup
 
@@ -243,3 +244,36 @@ npm run dev
 
 `http://localhost:5173/`
 ![Alt text](/readme-images/caddy-template.png?raw=true 'Caddy template')
+
+# Create the Main Layout
+
+Change the browser tab's title and icon in `index.html`.
+
+```HTML
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- 👇 change icon -->
+    <link rel="icon" type="image/png" href="/globe.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Caddy</title>
+    <!-- 👆 change title -->
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+```
+
+In `App.css` change the `max-width` and `padding`.
+
+```CSS
+#root {
+  max-width: 100%; 👈 change
+  margin: 0 auto;
+  padding: 0%; 👈 change
+  text-align: center;
+}
+```
