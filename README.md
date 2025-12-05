@@ -277,3 +277,10 @@ In `App.css` change the `max-width` and `padding`.
   text-align: center;
 }
 ```
+
+Add `shadcn` components.
+
+```bash
+npx shadcn@latest add sidebar
+npx shadcn@latest add collapsible
+```
