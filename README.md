@@ -408,7 +408,7 @@ export const MainLayout = () => {
 };
 ```
 
-Replace the contents of the <App> component to simply return <MainLayout />.
+Replace the contents of the `<App>` component to simply return `<MainLayout />`.
 
 `/src/App.tsx`
 
@@ -423,7 +423,7 @@ function App() {
 export default App;
 ```
 
-In `main.tsx` wrap <App> with <BrowserRouter>.
+In `main.tsx` wrap `<App>` with `<BrowserRouter>`.
 
 ```TypeScript
 import { StrictMode } from 'react';
