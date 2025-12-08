@@ -284,3 +284,162 @@ Add `shadcn` components.
 npx shadcn@latest add sidebar
 npx shadcn@latest add collapsible
 ```
+
+Create the main header component `<AppSidebarHeader>`.
+
+`/src/app/layout/components/app-sidebar-header.tsx`
+
+```TypeScript
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+import { SidebarTrigger } from '@/components/ui/sidebar';
+import { IconBrandGithub } from '@tabler/icons-react';
+
+export function AppSidebarHeader() {
+  return (
+    <header className="flex h-(--header-height) shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height)">
+      <div className="flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6">
+        <SidebarTrigger className="-ml-1" />
+        <Separator
+          orientation="vertical"
+          className="mx-2 data-[orientation=vertical]:h-4"
+        />
+        <div className="ml-auto flex items-center gap-2">
+          <Button
+            variant="ghost"
+            asChild
+            size="sm"
+            className="hidden sm:flex"
+            aria-label="GitHub"
+          >
+            <a
+              href="https://github.com/grantcolley/caddy"
+              rel="noopener noreferrer"
+              target="_blank"
+              className="dark:text-foreground"
+            >
+              <IconBrandGithub className="!size-5" />
+              GitHub
+            </a>
+          </Button>
+        </div>
+      </div>
+    </header>
+  );
+}
+```
+
+Create the main sidebar component `<AppSidebar>`.
+
+`/src/app/layout/components/app-sidebar.tsx`
+
+```TypeScript
+import * as React from 'react';
+import { Link } from 'react-router-dom';
+import { IconWorld } from '@tabler/icons-react';
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+} from '@/components/ui/sidebar';
+
+type Props = {} & React.ComponentProps<typeof Sidebar>;
+
+export function AppSidebar({ ...props }: Props) {
+  return (
+    <Sidebar collapsible="icon" {...props}>
+      <SidebarHeader>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              asChild
+              className="data-[slot=sidebar-menu-button]:!p-1.5"
+            >
+              <Link to="/">
+                <IconWorld className="!size-5" />
+                <span className="text-base font-semibold">Caddy</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarHeader>
+      <SidebarContent></SidebarContent>
+      <SidebarFooter></SidebarFooter>
+    </Sidebar>
+  );
+}
+```
+
+Create the main layout component `<MainLayout>` to host the `<AppSidebar>` and `<AppSidebarHeader>`.
+
+`/src/app/layout/components/main-layout.tsx`
+
+```TypeScript
+import { Outlet } from 'react-router-dom';
+import { AppSidebar } from '@/app/layout/components/app-sidebar';
+import { AppSidebarHeader } from '@/app/layout/components/app-sidebar-header';
+import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
+
+export const MainLayout = () => {
+  return (
+    <SidebarProvider
+      style={
+        {
+          '--sidebar-width': 'calc(var(--spacing) * 72)',
+          '--header-height': 'calc(var(--spacing) * 12)',
+        } as React.CSSProperties
+      }
+    >
+      <AppSidebar variant="inset" />
+      <SidebarInset>
+        <AppSidebarHeader />
+        <div className="flex flex-1 flex-col">
+          <div className="@container/main flex flex-1 flex-col gap-2">
+            <Outlet />
+          </div>
+        </div>
+      </SidebarInset>
+    </SidebarProvider>
+  );
+};
+```
+
+Replace the contents of the <App> component to simply return <MainLayout />.
+
+`/src/App.tsx`
+
+```TypeScript
+import './App.css';
+import { MainLayout } from './app/layout/components/main-layout';
+
+function App() {
+  return <MainLayout />;
+}
+
+export default App;
+```
+
+In `main.tsx` wrap <App> with <BrowserRouter>.
+
+```TypeScript
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom'; 👈 import
+import './index.css';
+import App from './App.tsx';
+
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <BrowserRouter> 👈 add
+      <App />
+    </BrowserRouter> 👈 add
+  </StrictMode>
+);
+```
+
+`http://localhost:5173/`
+![Alt text](/readme-images/caddy-main-layout.png?raw=true 'Caddy main layout')
