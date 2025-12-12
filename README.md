@@ -689,3 +689,6 @@ export function AppSidebarHeader() {
   );
 }
 ```
+
+`http://localhost:5173/`
+![Alt text](/readme-images/caddy-theme.png?raw=true 'Caddy theme')
