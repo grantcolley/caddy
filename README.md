@@ -18,6 +18,7 @@
   - [Install tabler icons](#install-tabler-icons)
   - [Run](#run)
 - [Create the Main Layout](#create-the-main-layout)
+- [Support Dark/Light Theme](#support-darklight-theme)
 
 # Tooling Setup
 
@@ -443,3 +444,248 @@ createRoot(document.getElementById('root')!).render(
 
 `http://localhost:5173/`
 ![Alt text](/readme-images/caddy-main-layout.png?raw=true 'Caddy main layout')
+
+# Support Dark/Light Theme
+
+Install `dropdown` and `tooltip` components.
+
+```bash
+npx shadcn@latest add dropdown-menu
+npx shadcn@latest add tooltip
+```
+
+Create the `<ThemeProvider>` component.
+
+`/src/app/theme/components/theme-provider.tsx`
+
+```TypeScript
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
+
+type Theme = 'dark' | 'light' | 'system';
+
+type ThemeProviderProps = {
+  children: React.ReactNode;
+  defaultTheme?: Theme;
+  storageKey?: string;
+};
+
+type ThemeProviderState = {
+  theme: Theme;
+  setTheme: (theme: Theme) => void;
+};
+
+const ThemeProviderContext = createContext<ThemeProviderState | undefined>(
+  undefined
+);
+
+function getSystemTheme(): 'dark' | 'light' {
+  return window.matchMedia('(prefers-color-scheme: dark)').matches
+    ? 'dark'
+    : 'light';
+}
+
+export function ThemeProvider({
+  children,
+  defaultTheme = 'system',
+  storageKey = 'caddy-ui-theme',
+}: ThemeProviderProps) {
+  const [theme, setThemeState] = useState<Theme>(() => {
+    const stored = localStorage.getItem(storageKey) as Theme | null;
+    return stored ?? defaultTheme;
+  });
+
+  useEffect(() => {
+    const root = document.documentElement;
+
+    const applyTheme = (t: Theme) => {
+      root.classList.remove('light', 'dark');
+      root.classList.add(t === 'system' ? getSystemTheme() : t);
+    };
+
+    applyTheme(theme);
+
+    if (theme !== 'system') return;
+
+    const mq = window.matchMedia('(prefers-color-scheme: dark)');
+    const onChange = () => applyTheme('system');
+
+    if (mq.addEventListener) mq.addEventListener('change', onChange);
+    else mq.addListener(onChange);
+
+    return () => {
+      if (mq.removeEventListener) mq.removeEventListener('change', onChange);
+      else mq.removeListener(onChange);
+    };
+  }, [theme]);
+
+  const value = useMemo(
+    () => ({
+      theme,
+      setTheme: (t: Theme) => {
+        localStorage.setItem(storageKey, t);
+        setThemeState(t);
+      },
+    }),
+    [theme, storageKey]
+  );
+
+  return (
+    <ThemeProviderContext.Provider value={value}>
+      {children}
+    </ThemeProviderContext.Provider>
+  );
+}
+
+// eslint-disable-next-line react-refresh/only-export-components
+export function useTheme() {
+  const ctx = useContext(ThemeProviderContext);
+  if (!ctx) throw new Error('useTheme must be used within a ThemeProvider');
+  return ctx;
+}
+```
+
+Create the `<ThemeToggle>` component.
+
+`/src/app/theme/components/theme-toggle.tsx`
+
+```TypeScript
+import { IconCheck, IconMoon, IconSun } from '@tabler/icons-react';
+import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
+
+import { useTheme } from './theme-provider';
+
+export function ThemeToggle() {
+  const { theme, setTheme } = useTheme();
+
+  return (
+    <TooltipProvider>
+      <DropdownMenu>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="icon">
+                <IconSun
+                  className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90"
+                  aria-label="Light mode"
+                />
+                <IconMoon
+                  className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0"
+                  aria-label="Dark mode"
+                />
+                <span className="sr-only">Toggle theme</span>
+              </Button>
+            </DropdownMenuTrigger>
+          </TooltipTrigger>
+          <TooltipContent>Toggle theme</TooltipContent>
+        </Tooltip>
+
+        <DropdownMenuContent align="end">
+          <DropdownMenuItem onClick={() => setTheme('light')}>
+            <span className="mr-2 inline-flex w-4">
+              {theme === 'light' ? <IconCheck className="h-4 w-4" /> : null}
+            </span>
+            Light
+          </DropdownMenuItem>
+
+          <DropdownMenuItem onClick={() => setTheme('dark')}>
+            <span className="mr-2 inline-flex w-4">
+              {theme === 'dark' ? <IconCheck className="h-4 w-4" /> : null}
+            </span>
+            Dark
+          </DropdownMenuItem>
+
+          <DropdownMenuItem onClick={() => setTheme('system')}>
+            <span className="mr-2 inline-flex w-4">
+              {theme === 'system' ? <IconCheck className="h-4 w-4" /> : null}
+            </span>
+            System
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </TooltipProvider>
+  );
+}
+```
+
+In `main.tsx` wrap `<App>` with the `<ThemeProvider>`.
+
+```TypeScript
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
+import { ThemeProvider } from './app/theme/components/theme-provider.tsx'; // 👈 import
+import './index.css';
+import App from './App.tsx';
+
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <ThemeProvider defaultTheme="system" storageKey="caddy-ui-theme"> // 👈 add
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </ThemeProvider>
+  </StrictMode>
+);
+```
+
+Add `<ThemeToggle>` to `sidebar-header.tsx`.
+
+```TypeScript
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+import { SidebarTrigger } from '@/components/ui/sidebar';
+import { IconBrandGithub } from '@tabler/icons-react';
+import { ThemeToggle } from '@/app/theme/components/theme-toggle'; // 👈 import
+
+export function AppSidebarHeader() {
+  return (
+    <header className="flex h-(--header-height) shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height)">
+      <div className="flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6">
+        <SidebarTrigger className="-ml-1" />
+        <Separator
+          orientation="vertical"
+          className="mx-2 data-[orientation=vertical]:h-4"
+        />
+        <div className="ml-auto flex items-center gap-2">
+          <ThemeToggle /> // 👈 add
+          <Button
+            variant="ghost"
+            asChild
+            size="sm"
+            className="hidden sm:flex"
+            aria-label="GitHub"
+          >
+            <a
+              href="https://github.com/grantcolley/caddy"
+              rel="noopener noreferrer"
+              target="_blank"
+              className="dark:text-foreground"
+            >
+              <IconBrandGithub className="!size-5" />
+              GitHub
+            </a>
+          </Button>
+        </div>
+      </div>
+    </header>
+  );
+}
+```

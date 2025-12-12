@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { IconBrandGithub } from '@tabler/icons-react';
+import { ThemeToggle } from '@/app/theme/components/theme-toggle';
 
 export function AppSidebarHeader() {
   return (
@@ -13,6 +14,7 @@ export function AppSidebarHeader() {
           className="mx-2 data-[orientation=vertical]:h-4"
         />
         <div className="ml-auto flex items-center gap-2">
+          <ThemeToggle />
           <Button
             variant="ghost"
             asChild
