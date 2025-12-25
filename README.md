@@ -415,7 +415,7 @@ Replace the contents of the `<App>` component to simply return `<MainLayout />`.
 
 ```TypeScript
 import './App.css';
-import { MainLayout } from './app/layout/main-layout';
+import { MainLayout } from '@/app/layout/main-layout';
 
 function App() {
   return <MainLayout />;
@@ -572,7 +572,7 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 
-import { useTheme } from './theme-provider';
+import { useTheme } from '@/app/providers/theme-provider';
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
@@ -635,7 +635,7 @@ In `main.tsx` wrap `<App>` with the `<ThemeProvider>`.
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import { ThemeProvider } from './app/providers/theme-provider.tsx'; // 👈 import
+import { ThemeProvider } from '@/app/providers/theme-provider.tsx'; // 👈 import
 import './index.css';
 import App from './App.tsx';
 

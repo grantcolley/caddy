@@ -13,7 +13,7 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 
-import { useTheme } from '../../app/providers/theme-provider';
+import { useTheme } from '@/app/providers/theme-provider';
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
