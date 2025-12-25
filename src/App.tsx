@@ -1,5 +1,5 @@
 import './App.css';
-import { MainLayout } from './app/layout/components/main-layout';
+import { MainLayout } from './app/layout/main-layout';
 
 function App() {
   return <MainLayout />;

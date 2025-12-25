@@ -286,9 +286,9 @@ npx shadcn@latest add sidebar
 npx shadcn@latest add collapsible
 ```
 
-Create the main header component `<AppSidebarHeader>`.
+Create the main sidebar header component `<AppSidebarHeader>`.
 
-`/src/app/layout/components/app-sidebar-header.tsx`
+`/src/features/sidebar/app-sidebar-header.tsx`
 
 ```TypeScript
 import { Button } from '@/components/ui/button';
@@ -332,7 +332,7 @@ export function AppSidebarHeader() {
 
 Create the main sidebar component `<AppSidebar>`.
 
-`/src/app/layout/components/app-sidebar.tsx`
+`/src/features/sidebar/app-sidebar.tsx`
 
 ```TypeScript
 import * as React from 'react';
@@ -377,12 +377,12 @@ export function AppSidebar({ ...props }: Props) {
 
 Create the main layout component `<MainLayout>` to host the `<AppSidebar>` and `<AppSidebarHeader>`.
 
-`/src/app/layout/components/main-layout.tsx`
+`/src/app/layout/main-layout.tsx`
 
 ```TypeScript
 import { Outlet } from 'react-router-dom';
-import { AppSidebar } from '@/app/layout/components/app-sidebar';
-import { AppSidebarHeader } from '@/app/layout/components/app-sidebar-header';
+import { AppSidebar } from '@/features/sidebar/app-sidebar';
+import { AppSidebarHeader } from '@/features/sidebar/app-sidebar-header';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 
 export const MainLayout = () => {
@@ -415,7 +415,7 @@ Replace the contents of the `<App>` component to simply return `<MainLayout />`.
 
 ```TypeScript
 import './App.css';
-import { MainLayout } from './app/layout/components/main-layout';
+import { MainLayout } from './app/layout/main-layout';
 
 function App() {
   return <MainLayout />;
@@ -426,6 +426,8 @@ export default App;
 
 In `main.tsx` wrap `<App>` with `<BrowserRouter>`.
 
+`/src/main.tsx`
+
 ```TypeScript
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
@@ -435,7 +437,7 @@ import App from './App.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter> 👈 add
+    <BrowserRouter>  👈 add
       <App />
     </BrowserRouter> 👈 add
   </StrictMode>
@@ -456,7 +458,7 @@ npx shadcn@latest add tooltip
 
 Create the `<ThemeProvider>` component.
 
-`/src/app/theme/components/theme-provider.tsx`
+`/src/app/providers/theme-provider.tsx`
 
 ```TypeScript
 import React, {
@@ -552,7 +554,7 @@ export function useTheme() {
 
 Create the `<ThemeToggle>` component.
 
-`/src/app/theme/components/theme-toggle.tsx`
+`/src/features/theme/theme-toggle.tsx`
 
 ```TypeScript
 import { IconCheck, IconMoon, IconSun } from '@tabler/icons-react';
@@ -627,33 +629,37 @@ export function ThemeToggle() {
 
 In `main.tsx` wrap `<App>` with the `<ThemeProvider>`.
 
+`/src/main.tsx`
+
 ```TypeScript
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import { ThemeProvider } from './app/theme/components/theme-provider.tsx'; // 👈 import
+import { ThemeProvider } from './app/providers/theme-provider.tsx'; // 👈 import
 import './index.css';
 import App from './App.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <ThemeProvider defaultTheme="system" storageKey="caddy-ui-theme"> // 👈 add
+    <ThemeProvider defaultTheme="system" storageKey="caddy-ui-theme"> 👈 add
       <BrowserRouter>
         <App />
       </BrowserRouter>
-    </ThemeProvider>
+    </ThemeProvider>  👈 add
   </StrictMode>
 );
 ```
 
 Add `<ThemeToggle>` to `sidebar-header.tsx`.
 
+`/src/features/sidebar/app-sidebar-header.tsx`
+
 ```TypeScript
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { IconBrandGithub } from '@tabler/icons-react';
-import { ThemeToggle } from '@/app/theme/components/theme-toggle'; // 👈 import
+import { ThemeToggle } from '@/features/theme/theme-toggle'; // 👈 import
 
 export function AppSidebarHeader() {
   return (
