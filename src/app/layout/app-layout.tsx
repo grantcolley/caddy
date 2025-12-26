@@ -3,7 +3,7 @@ import { AppSidebar } from '@/features/sidebar/app-sidebar';
 import { AppSidebarHeader } from '@/features/sidebar/app-sidebar-header';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 
-export const MainLayout = () => {
+export const AppLayout = () => {
   return (
     <SidebarProvider
       style={

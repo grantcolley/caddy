@@ -375,9 +375,9 @@ export function AppSidebar({ ...props }: Props) {
 }
 ```
 
-Create the main layout component `<MainLayout>` to host the `<AppSidebar>` and `<AppSidebarHeader>`.
+Create the application main layout component `<AppLayout>` to host the `<AppSidebar>` and `<AppSidebarHeader>`.
 
-`/src/app/layout/main-layout.tsx`
+`/src/app/layout/app-layout.tsx`
 
 ```TypeScript
 import { Outlet } from 'react-router-dom';
@@ -385,7 +385,7 @@ import { AppSidebar } from '@/features/sidebar/app-sidebar';
 import { AppSidebarHeader } from '@/features/sidebar/app-sidebar-header';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 
-export const MainLayout = () => {
+export const AppLayout = () => {
   return (
     <SidebarProvider
       style={
@@ -409,16 +409,16 @@ export const MainLayout = () => {
 };
 ```
 
-Replace the contents of the `<App>` component to simply return `<MainLayout />`.
+Replace the contents of the `<App>` component to simply return `<AppLayout />`.
 
 `/src/App.tsx`
 
 ```TypeScript
 import './App.css';
-import { MainLayout } from '@/app/layout/main-layout';
+import { AppLayout } from '@/app/layout/app-layout';
 
 function App() {
-  return <MainLayout />;
+  return <AppLayout />;
 }
 
 export default App;

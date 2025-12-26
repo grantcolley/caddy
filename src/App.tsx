@@ -1,8 +1,8 @@
 import './App.css';
-import { MainLayout } from '@/app/layout/main-layout';
+import { AppLayout } from '@/app/layout/app-layout';
 
 function App() {
-  return <MainLayout />;
+  return <AppLayout />;
 }
 
 export default App;
