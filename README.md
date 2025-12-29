@@ -10,6 +10,7 @@
   - [Install TypeScript type definitions for Node.js](#install-typescript-type-definitions-for-nodejs)
   - [Install React Router](#install-react-router)
   - [Install React Hook Form](#install-react-hook-form)
+  - [Install React Error Boundary](#install-react-error-boundary)
   - [Install Zod](#install-zod)
   - [Install Tailwind](#install-tailwind)
   - [Edit `tsconfig` files](#edit-tsconfig-files)
@@ -120,6 +121,14 @@ npm install react-router-dom
 
 ```bash
 npm install react-hook-form
+```
+
+### Install React Error Boundary
+
+[React Error Boundary](https://github.com/bvaughn/react-error-boundary) component wraps around other React components to "catch" errors and render a fallback UI.
+
+```bash
+npm install react-error-boundary
 ```
 
 ### Install Zod
