@@ -20,12 +20,12 @@
   - [Run](#run)
 - [Create the Main Layout](#create-the-main-layout)
 - [Support Dark/Light Theme](#support-darklight-theme)
-- [Create Routing](#create-routing)
+- [Add Routing with `<RouterProvider>`](#add-routing-with-routerprovider)
   - [Create Models for Config Driven Sidebar and Routing](#create-models-for-config-driven-sidebar-and-routing)
   - [Create Components to Route to](#create-components-to-route-to)
   - [Create Config Driven Routing](#create-config-driven-routing)
   - [Create the Router](#create-the-router)
-  - [Create the `<AppSidebarContent>`](#)
+  - [Create the `<AppSidebarContent>`](#create-the-appsidebarcontent)
   - [Update Existing Components to Implement Routing](#update-existing-components-to-implement-routing)
 
 # Tooling Setup
@@ -1604,3 +1604,6 @@ createRoot(document.getElementById('root')!).render(
   </StrictMode>
 );
 ```
+
+`http://localhost:5173/`
+![Alt text](/readme-images/caddy-routing.png?raw=true 'Caddy routing')
