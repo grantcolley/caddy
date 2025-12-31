@@ -2,8 +2,13 @@ import { Outlet } from 'react-router-dom';
 import { AppSidebar } from '@/features/sidebar/app-sidebar';
 import { AppSidebarHeader } from '@/features/sidebar/app-sidebar-header';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
+import type { Module } from '@/shared/models/module';
 
-export const App = () => {
+type Props = {
+  modules: Module[];
+};
+
+export const App = ({ modules }: Props) => {
   return (
     <SidebarProvider
       style={
@@ -13,7 +18,7 @@ export const App = () => {
         } as React.CSSProperties
       }
     >
-      <AppSidebar variant="inset" />
+      <AppSidebar modules={modules} variant="inset" />
       <SidebarInset>
         <AppSidebarHeader />
         <div className="flex flex-1 flex-col">

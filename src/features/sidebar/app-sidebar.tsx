@@ -10,10 +10,14 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
+import type { Module } from '@/shared/models/module';
+import { AppSidebarContent } from './app-sidebar-content';
 
-type Props = {} & React.ComponentProps<typeof Sidebar>;
+type Props = {
+  modules: Module[];
+} & React.ComponentProps<typeof Sidebar>;
 
-export function AppSidebar({ ...props }: Props) {
+export function AppSidebar({ modules, ...props }: Props) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -31,7 +35,9 @@ export function AppSidebar({ ...props }: Props) {
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
-      <SidebarContent></SidebarContent>
+      <SidebarContent>
+        <AppSidebarContent modules={modules}></AppSidebarContent>
+      </SidebarContent>
       <SidebarFooter></SidebarFooter>
     </Sidebar>
   );
