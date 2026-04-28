@@ -702,7 +702,7 @@ export function AppSidebarHeader() {
 
 # Add Routing with `<RouterProvider>`
 
-Add the classes so support a sidebar structure containing `modules`, `categories`, and `pages`, that will be mapped to `<Routes>`'s.
+Add the classes to support a sidebar structure containing `modules`, `categories`, and `pages`, that will be mapped to `<Routes>`'s.
 
 ## Create Models for Config Driven Sidebar and Routing
 
